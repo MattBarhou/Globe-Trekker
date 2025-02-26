@@ -1,0 +1,13 @@
+# .gitignore
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+*.db
+.DS_Store
+*.log
+client/android/
+client/ios/
+client/build/
