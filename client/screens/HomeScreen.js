@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FlatList, ActivityIndicator } from "react-native";
+import { FlatList, ActivityIndicator, Animated } from "react-native";
 import { Box, Heading, Text, Image, Card, Button } from "@gluestack-ui/themed";
 import { Ionicons } from "@expo/vector-icons";
 import SearchBar from "../components/SearchBar";
@@ -52,6 +52,27 @@ export default function HomeScreen({ navigation }) {
       setFilteredCountries(filtered);
     }
   }, [searchQuery, countries]);
+
+  const handleCountryPress = (country) => {
+    // Create a small animation effect before navigation
+    Animated.sequence([
+      Animated.timing(new Animated.Value(1), {
+        toValue: 0.95,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(new Animated.Value(0.95), {
+        toValue: 1,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    // Navigate with a slight delay for better visual effect
+    setTimeout(() => {
+      navigation.navigate("CountryDetails", { country });
+    }, 150);
+  };
 
   if (loading) {
     return (
@@ -108,9 +129,7 @@ export default function HomeScreen({ navigation }) {
                 flexDirection="row"
                 alignItems="center"
                 justifyContent="center"
-                onPress={() => {
-                  // navigation.navigate('CountryDetails', { country: item });
-                }}
+                onPress={() => handleCountryPress(item)}
               >
                 <Text color="#ffffff" marginRight={4}>
                   More Details
