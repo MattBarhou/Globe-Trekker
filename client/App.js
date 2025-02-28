@@ -45,10 +45,8 @@ export default function App() {
                 open: customTransitionConfig,
                 close: customTransitionConfig,
               },
-              // Add gesture handling for a more interactive feel
               gestureEnabled: true,
               gestureDirection: "horizontal",
-              // Add a nice presentation style
               presentation: "card",
             }}
           >
@@ -75,7 +73,7 @@ export default function App() {
               component={CountryDetailsScreen}
               options={({ route }) => ({
                 title: route.params.country.name.common,
-                headerShown: false, // Hide the stack navigator header since drawer has its own
+                headerShown: false,
                 // Slide from right for details screen
                 animation: "slide_from_right",
               })}

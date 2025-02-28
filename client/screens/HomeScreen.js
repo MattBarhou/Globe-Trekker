@@ -1,7 +1,18 @@
 import { useState, useEffect } from "react";
-import { FlatList, ActivityIndicator, Animated } from "react-native";
-import { Box, Heading, Text, Image, Card, Button } from "@gluestack-ui/themed";
+import {
+  FlatList,
+  ActivityIndicator,
+  Animated,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StatusBar,
+  SafeAreaView,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import SearchBar from "../components/SearchBar";
 
 export default function HomeScreen({ navigation }) {
@@ -54,92 +65,185 @@ export default function HomeScreen({ navigation }) {
   }, [searchQuery, countries]);
 
   const handleCountryPress = (country) => {
-    // Create a small animation effect before navigation
-    Animated.sequence([
-      Animated.timing(new Animated.Value(1), {
-        toValue: 0.95,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.timing(new Animated.Value(0.95), {
-        toValue: 1,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-    ]).start();
-
-    // Navigate with a slight delay for better visual effect
+    // Keep just the navigation with a slight delay for better UX
     setTimeout(() => {
       navigation.navigate("CountryDetails", { country });
-    }, 150);
+    }, 50);
+  };
+
+  const renderCountryCard = ({ item }) => {
+    return (
+      <View style={styles.cardContainer}>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          style={styles.card}
+          onPress={() => handleCountryPress(item)}
+        >
+          <LinearGradient
+            colors={["rgba(0,0,0,0.7)", "rgba(0,0,0,0)"]}
+            style={styles.cardGradient}
+          >
+            <Text style={styles.countryName}>{item.name.common}</Text>
+          </LinearGradient>
+
+          <Image
+            source={{ uri: item.flags.png }}
+            style={styles.flagImage}
+            resizeMode="cover"
+          />
+
+          <View style={styles.cardOverlay}>
+            <TouchableOpacity
+              style={styles.detailsButton}
+              onPress={() => handleCountryPress(item)}
+            >
+              <Text style={styles.buttonText}>Explore</Text>
+              <Ionicons name="arrow-forward" size={16} color="#ffffff" />
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
   };
 
   if (loading) {
     return (
-      <Box flex={1} bg="#1a1a1a" justifyContent="center" alignItems="center">
+      <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#ffffff" />
-      </Box>
+      </View>
     );
   }
 
   if (error) {
     return (
-      <Box flex={1} bg="#1a1a1a" justifyContent="center" alignItems="center">
-        <Text color="red">{error}</Text>
-      </Box>
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
     );
   }
 
   return (
-    <Box flex={1} backgroundColor="#1a1a1a">
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" />
+
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
       <FlatList
         data={filteredCountries}
         keyExtractor={(item) => item.cca3}
         numColumns={2}
-        contentContainerStyle={{ padding: 8 }}
-        columnWrapperStyle={{ justifyContent: "space-between" }}
-        renderItem={({ item }) => (
-          <Card
-            flex={1}
-            margin={8}
-            backgroundColor="#2a2a2a"
-            borderRadius={10}
-            overflow="hidden"
-            maxWidth="46%"
-          >
-            <Box height={120} width="100%" backgroundColor="#1a1a1a">
-              <Image
-                source={{ uri: item.flags.png }}
-                alt={`${item.name.common} flag`}
-                height="100%"
-                width="100%"
-                resizeMode="contain"
-              />
-            </Box>
-            <Box padding={10} alignItems="center">
-              <Heading size="sm" color="#ffffff" textAlign="center" mb={10}>
-                {item.name.common}
-              </Heading>
-              <Button
-                backgroundColor="#4a4a4a"
-                borderRadius={20}
-                paddingHorizontal={16}
-                paddingVertical={8}
-                flexDirection="row"
-                alignItems="center"
-                justifyContent="center"
-                onPress={() => handleCountryPress(item)}
-              >
-                <Text color="#ffffff" marginRight={4}>
-                  More Details
-                </Text>
-                <Ionicons name="arrow-forward" size={16} color="#ffffff" />
-              </Button>
-            </Box>
-          </Card>
-        )}
+        contentContainerStyle={styles.listContainer}
+        columnWrapperStyle={styles.columnWrapper}
+        renderItem={renderCountryCard}
+        showsVerticalScrollIndicator={false}
+        initialNumToRender={20}
+        maxToRenderPerBatch={20}
+        windowSize={21}
       />
-    </Box>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#121212",
+  },
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: "#121212",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorContainer: {
+    flex: 1,
+    backgroundColor: "#121212",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
+    color: "#ff5252",
+    fontSize: 16,
+  },
+  headerSubtitle: {
+    fontSize: 16,
+    color: "#9e9e9e",
+    marginTop: 4,
+  },
+  listContainer: {
+    padding: 12,
+    paddingBottom: 100, // Add extra padding at the bottom
+  },
+  columnWrapper: {
+    justifyContent: "space-between",
+  },
+  cardContainer: {
+    width: "48%",
+    marginBottom: 16,
+    borderRadius: 16,
+    overflow: "hidden",
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    height: 200,
+  },
+  card: {
+    height: 200,
+    backgroundColor: "#1e1e1e",
+    borderRadius: 16,
+    overflow: "hidden",
+  },
+  cardGradient: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 70,
+    zIndex: 2,
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+  },
+  countryName: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "bold",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+  },
+  flagImage: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+  },
+  cardOverlay: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    padding: 12,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+  detailsButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+  },
+  buttonText: {
+    color: "#ffffff",
+    marginRight: 4,
+    fontSize: 14,
+    fontWeight: "500",
+  },
+});

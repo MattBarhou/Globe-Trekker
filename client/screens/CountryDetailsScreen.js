@@ -1,8 +1,5 @@
-import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Ionicons } from "@expo/vector-icons";
-
-// Import screens from their individual files
 import OverviewScreen from "./countryDetails/OverviewScreen";
 import GeographyScreen from "./countryDetails/GeographyScreen";
 import CultureScreen from "./countryDetails/CultureScreen";
