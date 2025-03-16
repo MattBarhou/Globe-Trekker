@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "@gluestack-ui/themed";
+import InteractiveCountryMap from "../../components/InteractiveCountryMap";
 
 export default function OverviewScreen({ route }) {
   const { country } = route.params;
@@ -91,6 +92,10 @@ export default function OverviewScreen({ route }) {
           <Text style={styles.countryName}>{details.name.common}</Text>
           <Text style={styles.officialName}>{details.name.official || ""}</Text>
         </View>
+      </View>
+
+      <View style={styles.mapContainer}>
+        <InteractiveCountryMap country={details} />
       </View>
 
       <View style={styles.infoSection}>
@@ -379,5 +384,10 @@ const styles = StyleSheet.create({
   footerText: {
     color: "#666666",
     fontSize: 12,
+  },
+  mapContainer: {
+    marginHorizontal: 15,
+    marginTop: 15,
+    marginBottom: 15,
   },
 });
