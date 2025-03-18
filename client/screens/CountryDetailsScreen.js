@@ -1,8 +1,6 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Ionicons } from "@expo/vector-icons";
 import OverviewScreen from "./countryDetails/OverviewScreen";
-import GeographyScreen from "./countryDetails/GeographyScreen";
-import CultureScreen from "./countryDetails/CultureScreen";
 import EconomyScreen from "./countryDetails/EconomyScreen";
 
 // Create drawer navigator
@@ -46,29 +44,7 @@ export default function CountryDetailsScreen({ route }) {
           drawerIcon: ({ focused }) => (
             <Ionicons name="information-circle" size={24} color="#ffffff" />
           ),
-          headerTitle: `${country.name.common} - Overview`,
-        }}
-      />
-      <Drawer.Screen
-        name="Geography"
-        component={GeographyScreen}
-        initialParams={{ country }}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Ionicons name="map" size={24} color="#ffffff" />
-          ),
-          headerTitle: `${country.name.common} - Geography`,
-        }}
-      />
-      <Drawer.Screen
-        name="Culture"
-        component={CultureScreen}
-        initialParams={{ country }}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Ionicons name="people" size={24} color="#ffffff" />
-          ),
-          headerTitle: `${country.name.common} - Culture`,
+          headerTitle: "Overview",
         }}
       />
       <Drawer.Screen
@@ -79,7 +55,7 @@ export default function CountryDetailsScreen({ route }) {
           drawerIcon: ({ focused }) => (
             <Ionicons name="cash" size={24} color="#ffffff" />
           ),
-          headerTitle: `${country.name.common} - Economy`,
+          headerTitle: "Economy",
         }}
       />
     </Drawer.Navigator>

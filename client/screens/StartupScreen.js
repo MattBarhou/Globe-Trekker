@@ -9,6 +9,7 @@ export default function StartupScreen({ navigation }) {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.9)).current;
   const buttonOpacity = useRef(new Animated.Value(0)).current;
+  const buttonScale = useRef(new Animated.Value(0.9)).current;
 
   useEffect(() => {
     // Sequence of animations
@@ -37,21 +38,18 @@ export default function StartupScreen({ navigation }) {
   }, []);
 
   const handleExplore = () => {
-    // Animate out before navigation
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 300,
+    Animated.timing(buttonScale, {
+      toValue: 0.9,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => {
+      Animated.timing(buttonScale, {
+        toValue: 1,
+        duration: 200,
         useNativeDriver: true,
-      }),
-      Animated.timing(scaleAnim, {
-        toValue: 1.1,
-        duration: 300,
-        useNativeDriver: true,
-      }),
-    ]).start(() => {
-      // Navigate after animation completes
-      navigation.navigate("Home");
+      }).start(() => {
+        navigation.navigate("Home");
+      });
     });
   };
 

@@ -8,6 +8,7 @@ import {
   Linking,
   TouchableOpacity,
 } from "react-native";
+import WeatherWidget from "../../components/WeatherWidget";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "@gluestack-ui/themed";
 import InteractiveCountryMap from "../../components/InteractiveCountryMap";
@@ -97,6 +98,12 @@ export default function OverviewScreen({ route }) {
       <View style={styles.mapContainer}>
         <InteractiveCountryMap country={details} />
       </View>
+
+      {details.capital && (
+        <View style={styles.weatherContainer}>
+          <WeatherWidget capital={details.capital} countryCode={details.cca2} />
+        </View>
+      )}
 
       <View style={styles.infoSection}>
         <Text style={styles.sectionTitle}>General Information</Text>
@@ -207,20 +214,6 @@ export default function OverviewScreen({ route }) {
               <Text style={styles.infoLabel}>Timezone</Text>
               <Text style={styles.infoValue}>
                 {details.timezones[0] || "Not available"}
-              </Text>
-            </View>
-          </View>
-        )}
-
-        {details.car && details.car.side && (
-          <View style={styles.infoRow}>
-            <View style={styles.infoIconContainer}>
-              <Ionicons name="car" size={24} color="#ffffff" />
-            </View>
-            <View style={styles.infoTextContainer}>
-              <Text style={styles.infoLabel}>Driving Side</Text>
-              <Text style={styles.infoValue}>
-                {details.car.side === "right" ? "Right" : "Left"}
               </Text>
             </View>
           </View>

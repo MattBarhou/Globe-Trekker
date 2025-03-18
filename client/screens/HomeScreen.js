@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import {
   FlatList,
   ActivityIndicator,
-  Animated,
   StyleSheet,
   View,
   Text,
@@ -65,7 +64,6 @@ export default function HomeScreen({ navigation }) {
   }, [searchQuery, countries]);
 
   const handleCountryPress = (country) => {
-    // Keep just the navigation with a slight delay for better UX
     setTimeout(() => {
       navigation.navigate("CountryDetails", { country });
     }, 50);
@@ -125,7 +123,6 @@ export default function HomeScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
-
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       <FlatList
@@ -164,11 +161,6 @@ const styles = StyleSheet.create({
   errorText: {
     color: "#ff5252",
     fontSize: 16,
-  },
-  headerSubtitle: {
-    fontSize: 16,
-    color: "#9e9e9e",
-    marginTop: 4,
   },
   listContainer: {
     padding: 12,

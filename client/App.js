@@ -63,8 +63,7 @@ export default function App() {
               name="Home"
               component={HomeScreen}
               options={{
-                headerBackVisible: false,
-                // Slide from bottom for a nice reveal
+                headerShown: false,
                 animation: "slide_from_bottom",
               }}
             />

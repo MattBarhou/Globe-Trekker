@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import "dotenv/config";
 
 export default {
   expo: {
@@ -11,38 +11,40 @@ export default {
     splash: {
       image: "./assets/splash-icon.png",
       resizeMode: "contain",
-      backgroundColor: "#ffffff"
+      backgroundColor: "#ffffff",
     },
     ios: {
       supportsTablet: true,
       config: {
-        googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || ""
-      }
+        googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || "",
+      },
     },
     android: {
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
       },
       config: {
         googleMaps: {
-          apiKey: process.env.GOOGLE_MAPS_API_KEY || ""
-        }
-      }
+          apiKey: process.env.GOOGLE_MAPS_API_KEY || "",
+        },
+      },
     },
     web: {
-      favicon: "./assets/favicon.png"
+      favicon: "./assets/favicon.png",
     },
     plugins: [
       [
         "expo-location",
         {
-          locationAlwaysAndWhenInUsePermission: "Allow Globe Trekker to use your location."
-        }
-      ]
+          locationAlwaysAndWhenInUsePermission:
+            "Allow Globe Trekker to use your location.",
+        },
+      ],
     ],
     extra: {
-      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || ""
-    }
-  }
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || "",
+      openWeatherApiKey: process.env.OPENWEATHER_API_KEY || "",
+    },
+  },
 };
