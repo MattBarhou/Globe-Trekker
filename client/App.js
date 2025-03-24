@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GluestackUIProvider, config } from "@gluestack-ui/themed";
 import StartupScreen from "./screens/StartupScreen";
 import HomeScreen from "./screens/HomeScreen";
-import CountryDetailsScreen from "./screens/CountryDetailsScreen";
+import OverviewScreen from "./screens/countryDetails/OverviewScreen";
 import { StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -69,10 +69,13 @@ export default function App() {
             />
             <Stack.Screen
               name="CountryDetails"
-              component={CountryDetailsScreen}
+              component={OverviewScreen}
               options={({ route }) => ({
                 title: route.params.country.name.common,
-                headerShown: false,
+                headerStyle: {
+                  backgroundColor: "#1a1a1a",
+                },
+                headerTintColor: "#ffffff",
                 // Slide from right for details screen
                 animation: "slide_from_right",
               })}

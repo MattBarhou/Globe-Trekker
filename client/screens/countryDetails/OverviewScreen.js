@@ -12,6 +12,7 @@ import WeatherWidget from "../../components/WeatherWidget";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "@gluestack-ui/themed";
 import InteractiveCountryMap from "../../components/InteractiveCountryMap";
+import CurrencyConverter from "../../components/CurrencyConverter";
 
 export default function OverviewScreen({ route }) {
   const { country } = route.params;
@@ -33,6 +34,7 @@ export default function OverviewScreen({ route }) {
         }
 
         const data = await response.json();
+        console.log(data);
         setDetails(data[0] || country);
         setLoading(false);
       } catch (error) {
@@ -99,11 +101,16 @@ export default function OverviewScreen({ route }) {
         <InteractiveCountryMap country={details} />
       </View>
 
-      {details.capital && (
+      {details.capital && details.capital.length > 0 && (
         <View style={styles.weatherContainer}>
-          <WeatherWidget capital={details.capital} countryCode={details.cca2} />
+          <WeatherWidget
+            capital={details.capital[0]}
+            countryCode={details.cca2}
+          />
         </View>
       )}
+
+      <CurrencyConverter details={details} />
 
       <View style={styles.infoSection}>
         <Text style={styles.sectionTitle}>General Information</Text>
