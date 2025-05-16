@@ -34,7 +34,6 @@ export default function OverviewScreen({ route }) {
         }
 
         const data = await response.json();
-        console.log(data);
         setDetails(data[0] || country);
         setLoading(false);
       } catch (error) {

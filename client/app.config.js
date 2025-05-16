@@ -7,7 +7,14 @@ export default {
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
+    updates: {
+      url: "https://u.expo.dev/93479e2b-7319-4251-9954-f3cf75ba0aa3",
+    },
+    runtimeVersion: {
+      policy: "appVersion",
+    },
     userInterfaceStyle: "light",
+    owner: "mattbarhou",
     splash: {
       image: "./assets/splash-icon.png",
       resizeMode: "contain",
@@ -43,6 +50,9 @@ export default {
       ],
     ],
     extra: {
+      eas: {
+        projectId: "93479e2b-7319-4251-9954-f3cf75ba0aa3",
+      },
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || "",
       openWeatherApiKey: process.env.OPENWEATHER_API_KEY || "",
     },
